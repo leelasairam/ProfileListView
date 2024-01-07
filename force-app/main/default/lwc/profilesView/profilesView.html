@@ -1,11 +1,18 @@
 <template>
     <div style="background-color: rgb(255, 255, 255);padding:1rem">
-        <template for:each={Profiles} for:item="i">
-            <lightning-accordion key={i.profile} allow-multiple-sections-open>
+        <div>
+            <lightning-input label="Filter" type="text" onchange={GetFilterProfiles} class="filter" style="margin-bottom: 0.5rem;"></lightning-input>
+        </div>
+        <template for:each={FilterProfiles} for:item="i">
+            <lightning-accordion key={i.profile} onsectiontoggle={Spinner} allow-multiple-sections-open>
                <lightning-accordion-section label={i.profile}>
                   <lightning-datatable key-field="Id" data={i.users} columns={cols} show-row-number-column hide-checkbox-column></lightning-datatable>
                </lightning-accordion-section>
             </lightning-accordion>
         </template>
+    </div>
+
+    <div if:true={load}>
+        <lightning-spinner variant="brand" alternative-text="Loading" size="medium"></lightning-spinner>
     </div>
 </template>
